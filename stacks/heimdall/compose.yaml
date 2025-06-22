@@ -29,48 +29,14 @@ services:
       - SYS_TTY_CONFIG
       - WAKE_ALARM
     container_name: heimdall
-    entrypoint:
-      - /init
     environment:
       - TZ=Etc/UTC
-      - PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      - PS1=$$(whoami)@$$(hostname):$$(pwd)\$$
-      - HOME=/root
-      - TERM=xterm
-      - S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
-      - S6_VERBOSITY=1
-      - S6_STAGE2_HOOK=/docker-mods
-      - VIRTUAL_ENV=/lsiopy
-      - LSIO_FIRST_PARTY=true
-      - CURL_CA_BUNDLE=
-    hostname: a5d52a0fa824
     image: linuxserver/heimdall:latest
     ipc: private
     labels:
       build_version: Linuxserver.io version:- v2.6.3-ls309 Build-date:-
         2025-05-23T18:49:09+00:00
-      maintainer: aptalca
-      org.opencontainers.image.authors: linuxserver.io
-      org.opencontainers.image.created: 2025-05-23T18:49:09+00:00
-      org.opencontainers.image.description: "[Heimdall](https://heimdall.site) is a
-        way to organise all those links to your most used web sites and web
-        applications in a simple way.    Simplicity is the key to
-        Heimdall.    Why not use it as your browser start page? It even has the
-        ability to include a search bar using either Google, Bing or
-        DuckDuckGo.  "
-      org.opencontainers.image.documentation: https://docs.linuxserver.io/images/docker-heimdall
-      org.opencontainers.image.licenses: GPL-3.0-only
-      org.opencontainers.image.ref.name: 05979763c7ed768e0f3d346fc0ee7e658d9c466b
-      org.opencontainers.image.revision: 05979763c7ed768e0f3d346fc0ee7e658d9c466b
       org.opencontainers.image.source: https://github.com/linuxserver/docker-heimdall
-      org.opencontainers.image.title: Heimdall
-      org.opencontainers.image.url: https://github.com/linuxserver/docker-heimdall/packages
-      org.opencontainers.image.vendor: linuxserver.io
-      org.opencontainers.image.version: v2.6.3-ls309
-    logging:
-      driver: json-file
-      options: {}
-    mac_address: 22:a6:48:20:8e:a9
     networks:
       - nginx-proxy-manager_default
     ports:
@@ -79,8 +45,6 @@ services:
     restart: unless-stopped
     volumes:
       - 2a3819ccb5e0c739bc2ffdf67df28be52de76f55de84c4c9b361bc3744f41510:/config
-    working_dir: /
-version: "3.6"
 volumes:
   2a3819ccb5e0c739bc2ffdf67df28be52de76f55de84c4c9b361bc3744f41510:
     external: true
