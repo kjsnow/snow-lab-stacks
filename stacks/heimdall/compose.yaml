@@ -33,16 +33,6 @@ services:
       - /init
     environment:
       - TZ=Etc/UTC
-      - PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      - PS1=$$(whoami)@$$(hostname):$$(pwd)\$$
-      - HOME=/root
-      - TERM=xterm
-      - S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
-      - S6_VERBOSITY=1
-      - S6_STAGE2_HOOK=/docker-mods
-      - VIRTUAL_ENV=/lsiopy
-      - LSIO_FIRST_PARTY=true
-      - CURL_CA_BUNDLE=
     hostname: a5d52a0fa824
     image: linuxserver/heimdall:latest
     ipc: private
@@ -77,8 +67,7 @@ services:
       - 4433:443/tcp
       - 8080:80/tcp
     restart: unless-stopped
-    volumes:
-      - 2a3819ccb5e0c739bc2ffdf67df28be52de76f55de84c4c9b361bc3744f41510:/config
+    volumes: []
     working_dir: /
 version: "3.6"
 volumes:
