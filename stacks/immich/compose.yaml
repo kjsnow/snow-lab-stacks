@@ -9,10 +9,13 @@
 name: immich
 
 networks:
-  nginx-proxy-manager_default:
+  #nginx-proxy-manager_default:
+  #  external: true
+  #  name: nginx-proxy-manager_default
+  proxy:
     external: true
-    name: nginx-proxy-manager_default
-    
+  immich:
+
 services:
   immich-server:
     container_name: immich_server
@@ -30,8 +33,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
     #env_file:
     #  - stack.env
-    ports:
-      - 2283:2283
+    #ports:
+    #  - 2283:2283
     depends_on:
       - redis
       - database
@@ -39,7 +42,21 @@ services:
     healthcheck:
       disable: false
     networks:
-      - nginx-proxy-manager_default
+      #- nginx-proxy-manager_default
+      - proxy
+      - immich
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.immich.rule=Host(`immich.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.immich.entrypoints=http"
+      - "traefik.http.routers.immich-secure.tls=true"
+      - "traefik.http.services.immich.loadbalancer.server.port=2283"
+      - "traefik.http.middlewares.immich-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.immich.middlewares=immich-https-redirect"
+      - "traefik.http.routers.immich-secure.entrypoints=https"
+      - "traefik.http.routers.immich-secure.rule=Host(`immich.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.immich-secure.service=immich"
+
   immich-machine-learning:
     container_name: immich_machine_learning
     # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
@@ -55,14 +72,20 @@ services:
     restart: always
     healthcheck:
       disable: false
+    networks:
+      - immich
   redis:
     container_name: immich_redis
     image: docker.io/redis:6.2-alpine@sha256:eaba718fecd1196d88533de7ba49bf903ad33664a92debb24660a922ecd9cac8
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
+    networks:
+      - immich
   database:
     container_name: immich_postgres
+    networks:
+      - immich
     image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -88,4 +111,3 @@ services:
     restart: always
 volumes:
   model-cache: null
-
