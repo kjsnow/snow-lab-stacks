@@ -50,6 +50,7 @@ services:
       - "traefik.http.routers.immich.rule=Host(`immich.snow-lab.duckdns.org`)"
       - "traefik.http.routers.immich.entrypoints=http"
       - "traefik.http.routers.immich-secure.tls=true"
+      - "traefik.http.services.immich.loadbalancer.server.scheme=https"
       - "traefik.http.services.immich.loadbalancer.server.port=2283"
       - "traefik.http.middlewares.immich-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.immich.middlewares=immich-https-redirect"
