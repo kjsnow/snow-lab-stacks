@@ -34,11 +34,11 @@ services:
     #env_file:
     #  - stack.env
     #ports:
-    #  - 2283:2283
+    # - 2283:2283
     depends_on:
       - redis
       - database
-    restart: always
+    restart: unless-stopped
     healthcheck:
       disable: false
     networks:
@@ -50,12 +50,14 @@ services:
       - "traefik.http.routers.immich.rule=Host(`immich.snow-lab.duckdns.org`)"
       - "traefik.http.routers.immich.entrypoints=http"
       - "traefik.http.routers.immich-secure.tls=true"
+      - "traefik.http.services.immich.loadbalancer.server.scheme=http"
       - "traefik.http.services.immich.loadbalancer.server.port=2283"
       - "traefik.http.middlewares.immich-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.immich.middlewares=immich-https-redirect"
       - "traefik.http.routers.immich-secure.entrypoints=https"
       - "traefik.http.routers.immich-secure.rule=Host(`immich.snow-lab.duckdns.org`)"
       - "traefik.http.routers.immich-secure.service=immich"
+      - "traefik.docker.network=proxy"
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -79,7 +81,7 @@ services:
     image: docker.io/redis:6.2-alpine@sha256:eaba718fecd1196d88533de7ba49bf903ad33664a92debb24660a922ecd9cac8
     healthcheck:
       test: redis-cli ping || exit 1
-    restart: always
+    restart: unless-stopped
     networks:
       - immich
   database:
@@ -108,6 +110,7 @@ services:
     command: postgres -c shared_preload_libraries=vectors.so -c
       'search_path="$$user", public, vectors' -c logging_collector=on -c
       max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
-    restart: always
+    restart: unless-stopped
+
 volumes:
   model-cache: null
