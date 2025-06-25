@@ -18,7 +18,7 @@ services:
       - "traefik.http.routers.portainer-secure.rule=Host(`portainer.snow-lab.duckdns.org`)"
       - "traefik.http.routers.portainer-secure.tls=true"
       - "traefik.http.routers.portainer-secure.service=portainer"
-      - "traefik.http.services.portainer.loadbalancer.server.scheme=http"
+      - "traefik.http.services.portainer.loadbalancer.server.scheme=https"
       - "traefik.http.services.portainer.loadbalancer.server.port=9443"
     networks:
       - proxy

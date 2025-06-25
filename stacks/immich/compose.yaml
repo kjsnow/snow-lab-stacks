@@ -69,7 +69,7 @@ services:
       - model-cache:/cache
     #env_file:
     #  - stack.env
-    restart: always
+    restart: unless-stopped
     healthcheck:
       disable: false
     networks:
