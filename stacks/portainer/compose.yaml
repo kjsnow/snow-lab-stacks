@@ -12,9 +12,9 @@ services:
     networks:
       - proxy
 
-    # ports:
-    #   - "8000:8000/tcp"
-    #   - "9443:9443/tcp"
+    ports:
+      - "8000:8000/tcp"
+      - "9443:9443/tcp"
 
     restart: unless-stopped
 
