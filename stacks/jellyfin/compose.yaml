@@ -1,0 +1,74 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  jellyfin:
+
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+
+    container_name: "jellyfin"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=America/Chicago"
+
+    image: "linuxserver/jellyfin:latest"
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.jellyfin.entrypoints=http"
+      - "traefik.http.routers.jellyfin-secure.tls=true"
+      - "traefik.http.services.jellyfin.loadbalancer.server.scheme=http"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+      - "traefik.http.middlewares.jellyfin-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.jellyfin.middlewares=jellyfin-https-redirect"
+      - "traefik.http.routers.jellyfin-secure.entrypoints=https"
+      - "traefik.http.routers.jellyfin-secure.rule=Host(`jellyfin.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.jellyfin-secure.service=jellyfin"
+      - "traefik.docker.network=proxy"
+
+    networks:
+      - proxy
+
+        #ports:
+        #- "1900:1900/udp"
+        #- "7359:7359/udp"
+        #- "8095:8096/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/home/root/Downloads/jellysrv/config:/config"
+      - "/mnt/nfs-share/jellyfin/Movies:/data/movies"
+      - "/mnt/nfs-share/jellyfin/Shows:/data/tvshows"
+
+    working_dir: "/"
