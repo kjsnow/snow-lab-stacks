@@ -1,0 +1,80 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  jellyfin:
+
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+
+    container_name: "jellyfin"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=America/Chicago"
+      #- "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      #- "HOME=/root"
+      #- "LANGUAGE=en_US.UTF-8"
+      #- "LANG=en_US.UTF-8"
+      #- "TERM=xterm"
+      #- "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      #- "S6_VERBOSITY=1"
+      #- "S6_STAGE2_HOOK=/docker-mods"
+      #- "VIRTUAL_ENV=/lsiopy"
+      #- "LSIO_FIRST_PARTY=true"
+      #- "NVIDIA_DRIVER_CAPABILITIES=compute,video,utility"
+      #- "MALLOC_TRIM_THRESHOLD_=131072"
+
+    #hostname: "fdef1c378ddb"
+
+    image: "linuxserver/jellyfin:latest"
+
+    #ipc: "private"
+
+    #logging:
+      #driver: "json-file"
+      #options: {}
+
+    networks:
+      - proxy
+
+    ports:
+      - "1900:1900/udp"
+      - "7359:7359/udp"
+      - "8096:8096/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/home/root/Downloads/jellysrv/config:/config"
+      - "/mnt/nfs-share/jellyfin/Movies:/data/movies"
+      - "/mnt/nfs-share/jellyfin/Shows:/data/tvshows"
+
+    working_dir: "/"
