@@ -14,12 +14,12 @@ http:
 
 # endregion
 # region services
-      services:
-        proxmox:
-          loadBalancer:
-            servers:
-              - url: "https://192.168.1.100:8006"
-            passHostHeader: true
+  services:
+    proxmox:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.100:8006"
+        passHostHeader: true
 # endregion
   middlewares:
     https-redirectscheme:
