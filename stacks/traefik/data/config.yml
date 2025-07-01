@@ -10,6 +10,7 @@ http:
         - https-redirectscheme
       tls: {}
       service: proxmox
+
     adguard:
       entrypoints:
         - "https"
@@ -19,6 +20,7 @@ http:
         - https-redirectscheme
       tls: {}
       service: adguard
+    
     uptime-kuma:
       entrypoints:
         - "https"
@@ -29,6 +31,15 @@ http:
       tls: {}
       service: uptime-kuma
 
+    nextcloud:
+      entrypoints:
+        - "https"
+      rule: "Host(`nextcloud.snow-lab.duckdns.org`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: nextcloud
 
 # endregion
 # region services
@@ -49,6 +60,12 @@ http:
       loadBalancer:
         servers:
           - url: "http://192.168.1.119:3001"
+        passHostHeader: true
+
+    nextcloud:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.23:11000"
         passHostHeader: true
 
 # endregion
