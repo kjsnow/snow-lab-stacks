@@ -1,6 +1,6 @@
 services:
   nextcloud-aio-mastercontainer:
-    image: ghcr.io/nextcloud/all-in-one:latest
+    image: ghcr.io/nextcloud-releases/all-in-one:latest
     environment:
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=127.0.0.1 # Or 127.0.0.1 if Traefik is on host
