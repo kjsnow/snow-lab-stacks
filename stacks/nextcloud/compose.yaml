@@ -8,6 +8,8 @@ services:
       # You may need to also add - NEXTCLOUD_URL=https://nextcloud.snow-lab.duckdns.org
     networks:
       - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
   proxy:
