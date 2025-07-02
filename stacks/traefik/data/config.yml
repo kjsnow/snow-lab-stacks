@@ -65,7 +65,7 @@ http:
     nextcloud:
       loadBalancer:
         servers:
-          - url: "http://192.168.1.23:11000"
+          - url: "http://nextcloud-aio-apache:11000"
         passHostHeader: true
 
 # endregion

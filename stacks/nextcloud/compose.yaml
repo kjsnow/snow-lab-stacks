@@ -6,11 +6,12 @@ services:
     container_name: nextcloud-aio-mastercontainer
     environment:
       - APACHE_PORT=11000
-      - APACHE_IP_BINDING=127.0.0.1 # Or 127.0.0.1 if Traefik is on host
+      - APACHE_IP_BINDING=0.0.0.0 # Or 127.0.0.1 if Traefik is on host
+      - APACHE_ADDITIONAL_NETWORK=proxy
       - NEXTCLOUD_DATADIR=/path/to/your/data # Important, outside webroot
-      # You may need to also add - NEXTCLOUD_URL=https://nextcloud.snow-lab.duckdns.org
-    networks:
-      - proxy
+#    networks:
+#      - proxy
+    network_mode: bridge
     ports:
       - 8080:8080
     volumes:
