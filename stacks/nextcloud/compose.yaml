@@ -1,6 +1,7 @@
 services:
   nextcloud-aio-mastercontainer:
     image: ghcr.io/nextcloud-releases/all-in-one:latest
+    container_name: nextcloud-aio-mastercontainer
     environment:
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=127.0.0.1 # Or 127.0.0.1 if Traefik is on host
@@ -8,10 +9,15 @@ services:
       # You may need to also add - NEXTCLOUD_URL=https://nextcloud.snow-lab.duckdns.org
     networks:
       - proxy
+    restart: unless-stopped
     volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
   proxy:
     external: true
+
+volumes:
+  nextcloud_aio_mastercontainer:
 
