@@ -1,7 +1,0 @@
-- Infra:
-  - Proxmox:
-    href: https://proxmox.snow-lab.duckdns.org
-
-- Applications:
-  - Immich:
-    href: https://immich.snow-lab.duckdns.org
