@@ -2,15 +2,16 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/services/
 
-- My First Group:
-    - My First Service:
-        href: http://localhost/
-        description: Homepage is awesome
+- Infra:
+    - Proxmox:
+        href: https://proxmox.snow-lab.duckdns.org
+        description: Proxmox instance
 
-- My Second Group:
-    - My Second Service:
-        href: http://localhost/
-        description: Homepage is the best
+- Applications:
+    - Immich:
+        href: http://immich.snow-lab.duckdns.org
+        container: immich
+        description: Immich photo library
 
 - My Third Group:
     - My Third Service:
