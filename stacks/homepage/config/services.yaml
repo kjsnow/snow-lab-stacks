@@ -2,18 +2,122 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/services/
 
-- Infra:
+- Hypervisors/Virtualization:
     - Proxmox:
+        icon: proxmox.svg # https://github.com/homarr-labs/dashboard-icons
         href: https://proxmox.snow-lab.duckdns.org
-        description: Proxmox instance
+        server: dockerproxy
+        #description: Proxmox instance
+        widget:
+            type: proxmox
+            url: https://proxmox.snow-lab.duckdns.org
+            username: "{{HOMEPAGE_VAR_PROXMOX_USERNAME}}"
+            password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
+            node: home
+
+    - Dockge:
+        icon: dockge.svg
+        href: https://dockge.snow-lab.duckdns.org
+        server: dockerproxy
+        #description: Dockge
+
+    - Portainer:
+        icon: portainer.svg
+        href: https://portainer.snow-lab.duckdns.org
+        server: dockerproxy
+        #description: Portainer
+        widget:
+            type: portainer
+            url: https://portainer.snow-lab.duckdns.org
+            env: 2
+            key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+
+- Network/DNS/Proxy:
+    - UniFi:
+        icon: unifi.svg
+        href: https://unifi.ui.com/consoles/0CEA14C0AD6E000000000893E33A0000000009090DC600000000675A5935:1272165986/network/default/dashboard
+        widget:
+            type: unifi
+            url: https://192.168.1.1/proxy/network/integrations/v1/sites
+              #url: https://unifi.ui.com/consoles/0CEA14C0AD6E000000000893E33A0000000009090DC600000000675A5935:1272165986/network/default/dashboard
+            username: "{{HOMEPAGE_VAR_UNIFI_USERNAME}}"
+            password: "{{HOMEPAGE_VAR_UNIFI_PASSWORD}}"
+
+    - Adguard:
+        icon: adguard-home.svg
+        href: https://adguard.snow-lab.duckdns.org
+        server: dockerproxy
+        #description: Adblocker
+        widget:
+            type: adguard
+            url: https://adguard.snow-lab.duckdns.org
+            username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+            password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+
+    - Traefik:
+        icon: traefik.svg
+        href: https://traefik.snow-lab.duckdns.org
+        server: dockerproxy
+        widget:
+            type: traefik
+            url: https://traefik.snow-lab.duckdns.org
+            username: "{{HOMEPAGE_VAR_TRAEFIK_USERNAME}}"
+            password: "{{HOMEPAGE_VAR_TRAEFIK_PASSWORD}}"
+
+    - UptimeKuma:
+        icon: uptime-kuma.svg
+        href: https://kuma.snow-lab.duckdns.org
+        server: dockerproxy
+        widget:
+            type: uptimekuma
+            url: https://kuma.snow-lab.duckdns.org
+            slug: homepage
+
 
 - Applications:
-    - Immich:
-        href: http://immich.snow-lab.duckdns.org
-        container: immich
-        description: Immich photo library
+    - HomeAssistant:
+        icon: home-assistant.svg
+        href: http://192.168.1.24:8123
 
-- My Third Group:
-    - My Third Service:
-        href: http://localhost/
-        description: Homepage is 😎
+    - Immich:
+        icon: immich.svg
+        href: https://immich.snow-lab.duckdns.org
+        container: immich
+        server: dockerproxy
+        #description: Immich photo library
+        widget:
+            type: immich
+            url: https://immich.snow-lab.duckdns.org
+            key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
+            version: 2
+
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: https://jellyfin.snow-lab.duckdns.org
+        container: jellyfin
+        server: dockerproxy
+        widget:
+            type: jellyfin
+            url: https://jellyfin.snow-lab.duckdns.org
+            key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
+            enableBlocks: true
+            enableNowPlaying: true
+            enableUser: true
+            showEpisodeNumber: true
+
+    - Nextcloud:
+        icon: nextcloud.svg
+        href: https://nextcloud.snow-lab.duckdns.org
+        container: nextcloud-aio-mastercontainer
+        server: dockerproxy
+        widget:
+            type: nextcloud
+            url: https://nextcloud.snow-lab.duckdns.org
+            username: "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}"
+            password: "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}"
+        
+
+#- My Third Group:
+#    - My Third Service:
+#        href: http://localhost/
+#        description: Homepage is 😎
