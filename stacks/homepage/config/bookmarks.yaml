@@ -1,0 +1,18 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/bookmarks
+
+- Developer:
+    - "My Github":
+        - icon: github.svg
+          href: https://github.com/kjsnow?tab=repositories
+
+- Social:
+    - Reddit:
+      - icon: reddit.svg
+        href: https://reddit.com/
+
+- Entertainment:
+    - YouTube:
+        - icon: youtube.svg 
+          href: https://youtube.com/
