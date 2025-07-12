@@ -1,0 +1,50 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  navidrome:
+    #container_name: "navidrome"
+    entrypoint:
+      - "/app/navidrome"
+
+    environment:
+      #- "ND_SCANSCHEDULE=1h"
+      #- "ND_LOGLEVEL=info"
+      #- "ND_SESSIONTIMEOUT=24h"
+      #- "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "ND_MUSICFOLDER=/music"
+      - "ND_DATAFOLDER=/data"
+      - "ND_PORT=4533"
+      #- "GODEBUG=asyncpreemptoff=1"
+
+    image: "deluan/navidrome:latest"
+ 
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.navidrome.rule=Host(`navidrome.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.navidrome.entrypoints=http"
+      - "traefik.http.routers.navidrome-secure.tls=true"
+      - "traefik.http.services.navidrome.loadbalancer.server.scheme=http"
+      - "traefik.http.services.navidrome.loadbalancer.server.port=4533"
+      - "traefik.http.middlewares.navidrome-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.navidrome.middlewares=navidrome-https-redirect"
+      - "traefik.http.routers.navidrome-secure.entrypoints=https"
+      - "traefik.http.routers.navidrome-secure.rule=Host(`navidrome.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.navidrome-secure.service=navidrome"
+      - "traefik.docker.network=proxy"
+
+
+    networks:
+      - proxy
+
+    #    ports:
+    #      - "4533:4533/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/mnt/nfs-share/navidrome/Music:/music:ro"
+      - "/mnt/nfs-share/navidrome/data:/data"
+
+    working_dir: "/app"
