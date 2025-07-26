@@ -7,9 +7,26 @@ services:
       #- VERIFY_OWNERSHIP="TXT-FILE-CONTENT"
     restart: unless-stopped
     container_name: openspeedtest
-    ports:
-      - '80:3000'
-      - '443:3001'
     image: openspeedtest/latest
-    
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.openspeedtest.rule=Host(`openspeedtest.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.openspeedtest.entrypoints=http"
+      - "traefik.http.middlewares.openspeedtest-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.openspeedtest.middlewares=openspeedtest-https-redirect"
+      - "traefik.http.routers.openspeedtest-secure.entrypoints=https"
+      - "traefik.http.routers.openspeedtest-secure.rule=Host(`openspeedtest.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.openspeedtest-secure.tls=true"
+      - "traefik.http.routers.openspeedtest-secure.service=openspeedtest"
+      - "traefik.http.services.openspeedtest.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=10000000000"
+      - "traefik.http.routers.openspeedtest.middlewares=limit"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+
 
