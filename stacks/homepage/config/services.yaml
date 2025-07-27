@@ -116,10 +116,21 @@
             username: "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}"
             password: "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}"
 
+    - Navidrome:
+        icon: navidrome.svg
+        href: https://navidrome.snow-lab.duckdns.org
+        container: navidrome-navidrome-1
+        server: dockerproxy
+        widget:
+            type: navidrome
+            url: https://navidrome.snow-lab.duckdns.org
+            user: "{{HOMEPAGE_VAR_NAVIDROME_USER}}"
+            token: "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}"
+            salt: "{{HOMEPAGE_VAR_NAVIDROME_SALT}}"
+
 - Utilities:
     - OpenSpeedTest:
         icon: openspeedtest.svg
         href: https://openspeedtest.snow-lab.duckdns.org
         container: openspeedtest
         server: dockerproxy
-
