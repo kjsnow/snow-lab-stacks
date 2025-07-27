@@ -115,7 +115,7 @@
             url: https://nextcloud.snow-lab.duckdns.org
             username: "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}"
             password: "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}"
-        
+
     - Navidrome:
         icon: navidrome.svg
         href: https://navidrome.snow-lab.duckdns.org
@@ -128,7 +128,9 @@
             token: "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}"
             salt: "{{HOMEPAGE_VAR_NAVIDROME_SALT}}"
 
-#- My Third Group:
-#    - My Third Service:
-#        href: http://localhost/
-#        description: Homepage is 😎
+- Utilities:
+    - OpenSpeedTest:
+        icon: openspeedtest.svg
+        href: https://openspeedtest.snow-lab.duckdns.org
+        container: openspeedtest
+        server: dockerproxy
