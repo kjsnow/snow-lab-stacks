@@ -1,10 +1,5 @@
 services:
   openspeedtest:
-    #environment:
-      #- ENABLE_LETSENCRYPT=True
-      #- DOMAIN_NAME=speedtest.yourdomain.com
-      #- USER_EMAIL=you@yourdomain.com
-      #- VERIFY_OWNERSHIP="TXT-FILE-CONTENT"
     restart: unless-stopped
     container_name: openspeedtest
     image: openspeedtest/latest
@@ -28,5 +23,4 @@ services:
 networks:
   proxy:
     external: true
-
 
