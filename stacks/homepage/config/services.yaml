@@ -153,6 +153,11 @@
             password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
             systemId: "{{HOMEPAGE_VAR_BESZEL_VM_SYSTEM_ID}}"
             version: 2
+    - Dozzle:
+        icon: dozzle.svg
+        href: https://dozzle.snow-lab.duckdns.org
+        container: dozzle
+        server: dockerproxy
 
 - Utilities:
     - OpenSpeedTest:
