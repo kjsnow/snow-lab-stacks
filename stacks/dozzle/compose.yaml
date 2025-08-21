@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 8081:8080
+    #ports:
+    #  - 8081:8080
     #environment:
       # Uncomment to enable container actions (stop, start, restart). See https://dozzle.dev/guide/actions
       # - DOZZLE_ENABLE_ACTIONS=true
@@ -17,3 +17,23 @@ services:
       #
       # Uncomment to enable authentication. See https://dozzle.dev/guide/authentication
       # - DOZZLE_AUTH_PROVIDER=simple
+    
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dozzle.rule=Host(`dozzle.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.dozzle.entrypoints=http"
+      - "traefik.http.middlewares.dozzle-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.dozzle.middlewares=dozzle-https-redirect"
+      - "traefik.http.routers.dozzle-secure.entrypoints=https"
+      - "traefik.http.routers.dozzle-secure.rule=Host(`dozzle.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.dozzle-secure.tls=true"
+      - "traefik.http.routers.dozzle-secure.service=dozzle"
+      - "traefik.http.services.dozzle.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+
