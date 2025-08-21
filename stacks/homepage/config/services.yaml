@@ -128,6 +128,13 @@
             token: "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}"
             salt: "{{HOMEPAGE_VAR_NAVIDROME_SALT}}"
 
+- Monitoring:
+    - Beszel:
+        icon: beszel.svg
+        href: https://beszel.snow-lab.duckdns.org
+        container: beszel
+        server: dockerproxy
+
 - Utilities:
     - OpenSpeedTest:
         icon: openspeedtest.svg
