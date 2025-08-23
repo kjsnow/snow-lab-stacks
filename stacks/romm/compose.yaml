@@ -3,6 +3,10 @@ volumes:
   romm_resources:
   romm_redis_data:
 
+networks:
+  proxy:
+    external: true
+
 services:
   romm:
     image: rommapp/romm:latest
@@ -27,12 +31,26 @@ services:
       - /mnt/nfs-share/romm/library:/romm/library # Your game library. Check https://github.com/rommapp/romm?tab=readme-ov-file#folder-structure for more details.
       - /mnt/nfs-share/romm/assets:/romm/assets # Uploaded saves, states, etc.
       - /mnt/nfs-share/romm/config:/romm/config # Path where config.yml is stored
-    ports:
-      - 88:8080
+    #ports:
+    #  - 88:8080
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.romm.rule=Host(`romm.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.romm.entrypoints=http"
+      - "traefik.http.middlewares.romm-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.romm.middlewares=romm-https-redirect"
+      - "traefik.http.routers.romm-secure.entrypoints=https"
+      - "traefik.http.routers.romm-secure.rule=Host(`romm.snow-lab.duckdns.org`)"
+      - "traefik.http.routers.romm-secure.tls=true"
+      - "traefik.http.routers.romm-secure.service=romm"
+      - "traefik.http.services.romm.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"  
     depends_on:
       romm-db:
         condition: service_healthy
         restart: true
+    networks:
+      - proxy
 
   romm-db:
     image: mariadb:latest
