@@ -128,6 +128,16 @@
             token: "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}"
             salt: "{{HOMEPAGE_VAR_NAVIDROME_SALT}}"
 
+    - Romm:
+        icon: romm.svg
+        href: https://romm.snow-lab.duckdns.org
+        container: romm
+        server: dockerproxy
+        widget:
+            type: romm
+            url: https://romm.snow-lab.duckdns.org
+            # (max 4 fields) - "platforms", "totalRoms", "saves", "states", "screenshots", "totalfilesize"
+            fields: ["platforms", "totalRoms", "saves", "totalfilesize"] 
 - Monitoring:
     - Beszel-Proxmox:
         icon: beszel.svg
