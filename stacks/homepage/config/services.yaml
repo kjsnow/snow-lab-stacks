@@ -136,8 +136,8 @@
         widget:
             type: romm
             url: https://romm.snow-lab.duckdns.org
-            fields: ["platforms", "totalRoms", "saves", "states"] # optional (max 4) - "screenshots", "totalfilesize"
-
+            # (max 4 fields) - "platforms", "totalRoms", "saves", "states", "screenshots", "totalfilesize"
+            fields: ["platforms", "totalRoms", "saves", "totalfilesize"] 
 - Monitoring:
     - Beszel-Proxmox:
         icon: beszel.svg
