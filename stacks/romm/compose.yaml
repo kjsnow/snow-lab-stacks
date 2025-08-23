@@ -26,7 +26,7 @@ services:
       - /mnt/nfs-share/romm/assets:/romm/assets # Uploaded saves, states, etc.
       - /mnt/nfs-share/romm/config:/romm/config # Path where config.yml is stored
     ports:
-      - 80:8080
+      - 88:8080
     depends_on:
       romm-db:
         condition: service_healthy
