@@ -6,6 +6,7 @@ volumes:
 networks:
   proxy:
     external: true
+  romm:
 
 services:
   romm:
@@ -51,6 +52,7 @@ services:
         restart: true
     networks:
       - proxy
+      - romm
 
   romm-db:
     image: mariadb:latest
@@ -63,6 +65,8 @@ services:
       - MARIADB_PASSWORD=${MARIA_DB_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - romm
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       start_period: 30s
