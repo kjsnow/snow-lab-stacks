@@ -82,7 +82,7 @@ http:
     birdnetpi:
       loadBalancer:
         servers:
-          - url: "http://birdnetpi.local"
+          - url: "http://192.168.1.116:80"
         passHostHeader: true
 
 
