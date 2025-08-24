@@ -41,6 +41,17 @@ http:
       tls: {}
       service: nextcloud
 
+    birdnetpi:
+      entrypoints:
+        - "https"
+      rule: "Host(`birdnetpi.snow-lab.duckdns.org`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: birdnetpi
+
+
 # endregion
 # region services
   services:
@@ -67,6 +78,13 @@ http:
         servers:
           - url: "http://nextcloud-aio-apache:11000"
         passHostHeader: true
+    
+    birdnetpi:
+      loadBalancer:
+        servers:
+          - url: "http://birdnetpi.local"
+        passHostHeader: true
+
 
 # endregion
   middlewares:
