@@ -18,6 +18,7 @@ providers:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
   file:
+    watch: true
     filename: /config.yml
 certificatesResolvers:
   letsEncrypt:
