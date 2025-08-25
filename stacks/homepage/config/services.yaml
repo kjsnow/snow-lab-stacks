@@ -138,6 +138,11 @@
             url: https://romm.snow-lab.duckdns.org
             # (max 4 fields) - "platforms", "totalRoms", "saves", "states", "screenshots", "totalfilesize"
             fields: ["platforms", "totalRoms", "saves", "totalfilesize"] 
+
+    - BirdNETPi:
+        icon: birdnet.png
+        href: https://birdnetpi.snow-lab.duckdns.org
+        
 - Monitoring:
     - Beszel-Proxmox:
         icon: beszel.svg
